@@ -2,7 +2,6 @@
   "name": "playground",
   "version": "1.0.0",
   "scripts": {
-    "play": "npx tsx playground/index.ts",
     "frontend": "cd frontend && npm run dev",
     "postinstall": "cd frontend && npm install"
   },
