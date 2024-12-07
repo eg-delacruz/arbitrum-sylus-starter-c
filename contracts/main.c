@@ -76,7 +76,7 @@ int handler(size_t argc)
 
   uint32_t signature = *((uint32_t *)argv); // Parse function selector
 
-  // Call the function based on the signature
+  // Call the function based on the signature.
   ArbResult res = call_function(registry,
                                 sizeof(registry) / sizeof(registry[0]),
                                 signature, argv + 4, argc - 4 // Exclude the selector from calldata
