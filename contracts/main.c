@@ -52,6 +52,13 @@ ArbResult get_value(uint8_t *input, size_t len)
   return _return_success_bebi32(buf_out);
 }
 
+//Siempre tiene 2 argumentos: 1: todos los bytes en cruto 2: cantidad de bytes para tener referencia de cuantos slots de 32 bytes
+ArbResult hello_world(size_t argc, size_t len)
+{
+  return (_return_short_string(Success, "Hola desde 42 madrid"));
+
+}
+
 int handler(size_t argc)
 {
   // Save the function calldata
@@ -62,6 +69,8 @@ int handler(size_t argc)
   FunctionRegistry registry[] = {
       {to_function_selector("set_value(uint256)"), set_value},
       {to_function_selector("get_value()"), get_value},
+      //El string es el nombre de la funcion que se va a exponer al exterior, y de esta manera 
+      {to_function_selector("hola_mundo()"), hello_world},
       // Add more functions as needed here
   };
 
