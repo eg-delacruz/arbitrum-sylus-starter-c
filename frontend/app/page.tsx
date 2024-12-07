@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { createPublicClient, createWalletClient, http, parseAbi } from "viem";
 import { Tabs, TabsList, TabsContent, TabsTrigger } from "@/components/ui/tabs";
@@ -8,6 +9,9 @@ import { useAccount, useReadContract } from "wagmi";
 import Image from "next/image";
 
 import logo from "../assets/logo.png";
+
+//Components
+import { buttonVariants } from "@/components/ui/button";
 
 const ADDRESS = "0x0946e9c45504660e98464a7364be9f636d748ef4";
 
@@ -33,7 +37,6 @@ export default function Container() {
 
   return (
     <>
-      <p>{result.data || "Loading..."}</p>
       <section className="max-w-2xl mt-12 mx-auto">
         <div className="w-full flex justify-center mt-24">
           <Image src={logo} alt="Logo" width={550} height={90} />
@@ -72,14 +75,12 @@ export default function Container() {
             Connect
           </button>
 
-          <button
-            onClick={() => {
-              click();
-            }}
-            className="mt-4 p-4 bg-blue-500 text-white rounded-lg"
+          <Link
+            href={"/blockchain"}
+            className={buttonVariants({ variant: "default", size: "default" })}
           >
-            Click
-          </button>
+            Start
+          </Link>
         </form>
       </section>
     </>
