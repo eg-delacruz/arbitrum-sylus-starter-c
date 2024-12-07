@@ -34,9 +34,6 @@ clean:
 
 re: clean all
 
-play: all
-	@npm run play
-
 frontend: all
 	@npm run frontend
 
