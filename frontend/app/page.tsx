@@ -9,6 +9,7 @@ import { useAccount, useReadContract } from "wagmi";
 import Image from "next/image";
 
 import logo from "../assets/logo.png";
+import grama from "../assets/grama.svg";
 
 //Components
 import { buttonVariants } from "@/components/ui/button";
@@ -26,10 +27,7 @@ export default function Container() {
     abi: ABI,
   });
 
-  const [input, setInput] = useState("");
-
   console.log({ result });
-  const click = () => {};
 
   const connect = () => {
     openAccountModal();
@@ -37,52 +35,72 @@ export default function Container() {
 
   return (
     <>
-      <section className="max-w-2xl mt-12 mx-auto">
-        <div className="w-full flex justify-center mt-24">
+      <section className="max-w-2xl mx-auto h-[calc(100vh-91px)] flex flex-col justify-center">
+        <div className="w-full flex justify-center">
           <Image src={logo} alt="Logo" width={550} height={90} />
         </div>
 
         <br />
 
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            setInput("");
-          }}
-          className="flex flex-col items-center"
-        >
-          <input
-            placeholder="DNI"
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            className="w-full p-4 border border-gray-200 rounded-lg shadow-xl"
-          />
-          <br />
-          <input
-            placeholder="Three words address"
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            className="w-full p-4 border border-gray-200 rounded-lg shadow-xl"
-          />
-          <button
-            onClick={() => {
-              connect();
-            }}
-            className="mt-4 p-4 bg-blue-500 text-white rounded-lg"
-          >
-            Connect
-          </button>
+        <div className="flex justify-center">
+          {isConnected ? (
+            <div className="flex gap-4">
+              <Link
+                href={"/blockchain"}
+                className={buttonVariants({
+                  variant: "default",
+                  size: "default",
+                })}
+              >
+                Start
+              </Link>
+              <button
+                className={buttonVariants({
+                  variant: "secondary",
+                  size: "default",
+                })}
+                onClick={connect}
+              >
+                Disconnect
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={connect}
+              className={buttonVariants({
+                variant: "default",
+                size: "default",
+              })}
+            >
+              Connect
+            </button>
+          )}
+        </div>
 
-          <Link
-            href={"/blockchain"}
-            className={buttonVariants({ variant: "default", size: "default" })}
-          >
-            Start
-          </Link>
-        </form>
+        <div className="mt-10">
+          <h4 className="text-center font-bold text-xl">
+            {'"🌍 Own Your Land, Own Your Legacy – Secured on the Blockchain"'}
+            <br />
+          </h4>
+          <p className="mt-8">
+            Say goodbye to paper trails and hello to permanent proof. Our
+            cutting-edge platform puts your land ownership on the blockchain —
+            immutable, transparent, and always within reach. No middlemen, no
+            doubts, just pure peace of mind. Build your future on a foundation
+            that lasts forever.
+          </p>
+        </div>
       </section>
+      <div>
+        <div className="flex justify-center">
+          <Image src={grama} alt="Grama" width={40} height={40} />
+        </div>
+        <div className="h-12 bg-[#582F0E] flex justify-center items-center">
+          <p className="text-white text-center text-sm">
+            Developed by jtivan-r | ingjimen | erde-la-
+          </p>
+        </div>
+      </div>
     </>
   );
 }
