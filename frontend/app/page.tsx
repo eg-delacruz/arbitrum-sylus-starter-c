@@ -97,7 +97,8 @@ export default function Container() {
         </div>
         <div className="h-12 bg-[#582F0E] flex justify-center items-center">
           <p className="text-white text-center text-sm">
-            Developed by jtivan-r | ingjimen | erde-la-
+            Developed by <strong>jtivan-r</strong> | <strong>ingjimen</strong> |{" "}
+            <strong>erde-la-</strong>
           </p>
         </div>
       </div>

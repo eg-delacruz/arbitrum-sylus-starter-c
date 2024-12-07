@@ -5,9 +5,9 @@ import logo from "../../assets/logo.png";
 
 //Components
 import { Tabs, TabsList, TabsContent, TabsTrigger } from "@/components/ui/tabs";
-//TODO: use this button
-import { Button } from "@/components/ui/button";
+import Form from "./_components/form";
 
+//TODO: protect route
 export default function page() {
   return (
     <>
@@ -29,7 +29,9 @@ export default function page() {
               </TabsTrigger>
             </TabsList>
             <TabsContent value="check">
-              <div className="grid grid-cols-3 gap-3">hola</div>
+              <div className="h-[50vh] flex justify-center items-center">
+                <Form />
+              </div>
             </TabsContent>
             <TabsContent value="add">My publications</TabsContent>
           </Tabs>
