@@ -8,14 +8,14 @@ import {
   http,
   parseAbi,
   keccak256,
-  stringToBytes
+  stringToBytes,
 } from "viem";
 
 //Components
 import Form from "./form";
 import AddRegModal from "./add_reg_modal";
 
-import { UseAccountReturnType, useWriteContract } from "wagmi";
+import { UseAccountReturnType, useReadContract, useWriteContract } from "wagmi";
 
 type Props = {
   account: UseAccountReturnType;
@@ -25,7 +25,7 @@ const ABI = parseAbi([
   "function hola_mundo() public view returns (string)",
   "function set_value(bytes32) public",
   "function get_value() public view returns (uint256)",
-  "function storeHash(bytes32) external returns (bytes32)"
+  "function storeHash(bytes32) external returns (bytes32)",
 ]);
 
 export default function AddReg({ account }: Props) {
@@ -34,7 +34,7 @@ export default function AddReg({ account }: Props) {
   const [openModal, setOpenModal] = useState(false);
   const [showFede, setShowFede] = useState(true);
   const [success, setSuccess] = useState(false);
-  const { writeContract } = useWriteContract();
+  const { data, writeContract } = useWriteContract();
 
   const add_registery = async () => {
     if (dni === "" || words === "") {
@@ -67,13 +67,15 @@ export default function AddReg({ account }: Props) {
         setOpenModal(false);
       }, 10000);
 
-      //Write in blockchain
-      const res = await writeContract({
+      //Write in blockchain´
+      console.log("Writing in blockchain");
+      const res = writeContract({
         abi: ABI,
         functionName: "storeHash",
         address: "0xf60be222d397f0be3b11dafc1175f070ddf3eb30",
-        args: [hash]
+        args: [hash],
       });
+      console.log({ data });
       console.log({ res });
     } catch (e) {
       console.log(e);

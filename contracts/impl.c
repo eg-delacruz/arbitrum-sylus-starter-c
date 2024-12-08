@@ -1,5 +1,4 @@
 #include <string.h>
-#include <string.h>
 #include <stylus_types.h>
 #include <bebi.h>
 #include <storage.h>
@@ -63,13 +62,13 @@ ArbResult checkOwnership(const void *storage, uint8_t *input, size_t len) { // b
         return _return_nodata(Failure);
     }
 
+    // Copiamos los primeros 32 bytes de input a hash
 	bebi32 hash;
-	bebi32_set_u8(hash, *input);
+	memcpy(hash, input, 32);
 
-	if(!propertyExist(storage, hash))
-	{
-		return _return_short_string(Success, "Property doesn't exist");
-	}
+	if (!propertyExist(storage, hash)) {
+        return _return_short_string(Failure, "Property doesn't exist");
+    }
 
 	// Creo que obtenemos el valor de value en el map para el hash dado;
 	property_slot(hash, buf_out);
@@ -81,9 +80,17 @@ ArbResult checkOwnership(const void *storage, uint8_t *input, size_t len) { // b
     return _success_bebi32(buf_out);
 }
 
-ArbResult storeHash(void *storage, uint8_t *input, size_t len)
-{
-	return _return_short_string(Success, "storeHash");
+ArbResult storeHash(void *storage, uint8_t *input, size_t len) {
+    if (len != 32) {
+        return _return_short_string(Failure, "Invalid input length");
+    }
+
+    bebi32 slot;
+    bebi32 hash;
+    memcpy(hash, input, 32);
+    property_slot(hash, slot);
+
+    return _return_short_string(Success, "Hash stored successfully");
 }
 
 
