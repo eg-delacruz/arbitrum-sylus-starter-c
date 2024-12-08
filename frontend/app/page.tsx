@@ -14,21 +14,9 @@ import grama from "../assets/grama.svg";
 //Components
 import { buttonVariants } from "@/components/ui/button";
 
-const ADDRESS = "0x0946e9c45504660e98464a7364be9f636d748ef4";
-
-const ABI = parseAbi(["function hola_mundo() public returns (string)"]);
-
 export default function Container() {
   const { openAccountModal } = useRkAccountModal();
   const account = useAccount();
-
-  const result = useReadContract({
-    address: ADDRESS,
-    functionName: "hola_mundo",
-    abi: ABI,
-  });
-
-  console.log({ result });
 
   const connect = () => {
     openAccountModal();
@@ -47,7 +35,7 @@ export default function Container() {
           {account.isConnected ? (
             <div className="flex gap-4">
               <Link
-                href={"/registry"}
+                href={"/registery"}
                 className={buttonVariants({
                   variant: "default",
                   size: "default",

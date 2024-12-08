@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { JSHash, CONSTANTS } from "react-hash";
 
 import {
   createPublicClient,
@@ -36,15 +35,24 @@ export default function AddReg({ account }: Props) {
   const [success, setSuccess] = useState(false);
   const { writeContract } = useWriteContract();
 
+  //TODO: check the 3 words format
   const add_registery = async () => {
     if (dni === "" || words === "") {
       alert("Please fill all the fields");
       return;
     }
+
+    //Check that the format of words is the following: word.word.word
+    if (words.split(".").length !== 3) {
+      alert(
+        "Please fill the words field with the correct format as in https://what3words.com/"
+      );
+      return;
+    }
+
     const data = `${dni}-${words}-${account.address}`;
 
     try {
-      //const hash = await JSHash(data, CONSTANTS.HashAlgorithms.keccak);
       const hash = keccak256(stringToBytes(data));
 
       setOpenModal(true);

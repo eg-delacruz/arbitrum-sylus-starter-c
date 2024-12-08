@@ -15,8 +15,6 @@ import CheckReg from "./_components/check_reg";
 //Hooks
 import { useAccount } from "wagmi";
 
-//TODO: what3words GET address: (with the []?)
-//https://api.what3words.com/v3/convert-to-coordinates?words=filled.count.soap&key=[LSN4S08B]
 export default function Page() {
   const account = useAccount();
 

@@ -8,6 +8,7 @@ type Props = {
   dni_input: string;
   setDni: (dni: string) => void;
   words_input: string;
+  check_failure?: boolean;
   setWords: (words: string) => void;
   submitFunction: () => void;
 };
@@ -16,6 +17,7 @@ export default function Form({
   dni_input,
   setDni,
   words_input,
+  check_failure = false,
   setWords,
   submitFunction,
 }: Props) {
@@ -53,6 +55,11 @@ export default function Form({
           {variant === "add" ? "Add ownership" : "Check ownership"}
         </button>
       </div>
+      {check_failure && (
+        <div className="mt-4 p-4 bg-red-500 text-white rounded-sm text-xl">
+          The data does not match, this user is not the owner of the address
+        </div>
+      )}
     </form>
   );
 }
