@@ -1,4 +1,5 @@
-import type { Config } from "tailwindcss"
+import type { Config } from "tailwindcss";
+import animate_plugin from "tailwindcss-animate";
 
 export default {
   darkMode: ["class"],
@@ -15,7 +16,10 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       colors: {},
+      animation: {
+        "spin-slow": "spin 3s linear infinite",
+      },
     },
   },
-  plugins: [require("tailwindcss-animate")],
-} satisfies Config
+  plugins: [animate_plugin],
+} satisfies Config;

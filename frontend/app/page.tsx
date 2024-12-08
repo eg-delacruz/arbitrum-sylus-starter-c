@@ -20,7 +20,8 @@ const ABI = parseAbi(["function hola_mundo() public returns (string)"]);
 
 export default function Container() {
   const { openAccountModal } = useRkAccountModal();
-  const { isConnected } = useAccount();
+  const account = useAccount();
+
   const result = useReadContract({
     address: ADDRESS,
     functionName: "hola_mundo",
@@ -43,10 +44,10 @@ export default function Container() {
         <br />
 
         <div className="flex justify-center">
-          {isConnected ? (
+          {account.isConnected ? (
             <div className="flex gap-4">
               <Link
-                href={"/blockchain"}
+                href={"/registry"}
                 className={buttonVariants({
                   variant: "default",
                   size: "default",

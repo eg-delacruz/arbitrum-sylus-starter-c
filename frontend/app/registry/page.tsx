@@ -1,14 +1,30 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
+//Assets
 import logo from "../../assets/logo.png";
 
 //Components
 import { Tabs, TabsList, TabsContent, TabsTrigger } from "@/components/ui/tabs";
-import Form from "./_components/form";
+import AddReg from "./_components/add_reg";
+import CheckReg from "./_components/check_reg";
 
-//TODO: protect route
-export default function page() {
+//Hooks
+import { useAccount } from "wagmi";
+
+//TODO: what3words GET address: (with the []?)
+//https://api.what3words.com/v3/convert-to-coordinates?words=filled.count.soap&key=[LSN4S08B]
+export default function Page() {
+  const account = useAccount();
+
+  //Protect route with next router:
+  if (!account.isConnected) {
+    return redirect("/");
+  }
+
   return (
     <>
       <section className="max-w-2xl mt-12 mx-auto">
@@ -29,11 +45,11 @@ export default function page() {
               </TabsTrigger>
             </TabsList>
             <TabsContent value="check">
-              <div className="h-[50vh] flex justify-center items-center">
-                <Form />
-              </div>
+              <CheckReg account={account} />
             </TabsContent>
-            <TabsContent value="add">My publications</TabsContent>
+            <TabsContent value="add">
+              <AddReg account={account} />
+            </TabsContent>
           </Tabs>
         </section>
       </section>
