@@ -1,7 +1,6 @@
 .env
 *.o
-contract.wasm
-contract_unstripped.wasm
+*.wasm
 node_modules
 package-lock.json
 /target
