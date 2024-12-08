@@ -35,7 +35,6 @@ export default function AddReg({ account }: Props) {
   const [success, setSuccess] = useState(false);
   const { writeContract } = useWriteContract();
 
-  //TODO: check the 3 words format
   const add_registery = async () => {
     if (dni === "" || words === "") {
       alert("Please fill all the fields");
