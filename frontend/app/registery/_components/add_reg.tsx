@@ -8,7 +8,7 @@ import {
   http,
   parseAbi,
   keccak256,
-  stringToBytes,
+  stringToBytes
 } from "viem";
 
 //Components
@@ -25,6 +25,7 @@ const ABI = parseAbi([
   "function hola_mundo() public view returns (string)",
   "function set_value(bytes32) public",
   "function get_value() public view returns (uint256)",
+  "function storeHash(bytes32) external returns (bytes32)"
 ]);
 
 export default function AddReg({ account }: Props) {
@@ -67,12 +68,13 @@ export default function AddReg({ account }: Props) {
       }, 10000);
 
       //Write in blockchain
-      writeContract({
+      const res = await writeContract({
         abi: ABI,
-        functionName: "set_value",
-        address: "0xca63784ee340ff0dbce78ac965f609fc7d30f291",
-        args: [hash],
+        functionName: "storeHash",
+        address: "0xf60be222d397f0be3b11dafc1175f070ddf3eb30",
+        args: [hash]
       });
+      console.log({ res });
     } catch (e) {
       console.log(e);
     }
