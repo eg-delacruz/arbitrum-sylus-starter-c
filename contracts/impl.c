@@ -1,12 +1,4 @@
-#include <string.h>
-#include <stylus_types.h>
-#include <bebi.h>
-#include <storage.h>
-#include <stdbool.h>
-#include <stylus_debug.h>
-#include <stylus_utils.h>
 #include "Etherra.h"
-
 
 /**
  * Aquí definimos las funciones con las que se puede interacturar con el contrato
@@ -28,8 +20,8 @@ ArbResult inline _success_bebi32(bebi32 const retval) {
 }
 
 // Calcula el slot para el map de propiedades de una cuenta
-void property_slot(bebi32 const hash, bebi32 slot_out) {
-    bebi32 base = STORAGE_SLOT__properties;
+void hash_idx_storage_slot(bebi32 const hash, bebi32 slot_out) {
+    bebi32 base = STORAGE_SLOT_hash_idx;
     map_slot(base, hash, 32, slot_out);
 }
 
@@ -43,9 +35,9 @@ ArbResult default_func(void *storage, uint8_t *input, size_t len, bebi32 value) 
 // get index of a property from properties map
 uint64_t _property_idx(const void *storage, bebi32 const hash) {
     bebi32 slot;
-    property_slot(hash, slot);
+    hash_idx_storage_slot(hash, slot);
     bebi32 buffer;
-    storage_load(storage, slot, buffer);
+    storage_load_bytes32( slot, buffer);
     return bebi32_get_u64(buffer);
 }
 
@@ -53,6 +45,16 @@ bool propertyExist(const void *storage, bebi32 const hash)
 {
 	return _property_idx(storage, hash) != 0;
 }
+
+uint64_t _hash_idx(const void *storage, bebi32 const hash)
+{
+    bebi32 slot;
+    hash_idx_storage_slot(hash, slot);
+    bebi32 buffer;
+    storage_load_bytes32( slot, buffer);
+    return bebi32_get_u64(buffer);
+}
+
 
 // Inspirada en el estandar ERC20 balanceOf(address)
 // En su lugar recibe hash
@@ -62,22 +64,23 @@ ArbResult checkOwnership(const void *storage, uint8_t *input, size_t len) { // b
         return _return_nodata(Failure);
     }
 
-    // Copiamos los primeros 32 bytes de input a hash
-	bebi32 hash;
+    bebi32 hash;
 	memcpy(hash, input, 32);
 
-	if (!propertyExist(storage, hash)) {
-        return _return_short_string(Failure, "Property doesn't exist");
+
+    bebi32 owner;
+    msg_sender_padded(owner);
+
+    if(!bebi32_is_zero(owner))
+    {
+        bebi32 idx_hash_slot;
+        hash_idx_storage_slot(hash, idx_hash_slot);
+
+        storage_load_bytes32(idx_hash_slot, buf_out);
+        return _success_bebi32(buf_out);
     }
 
-	// Creo que obtenemos el valor de value en el map para el hash dado;
-	property_slot(hash, buf_out);
-
-	// Obtenemos la address de quien interactua con el contrato
-	// bebi32 sender;
-	// msg_sender_padded(sender);
-
-    return _success_bebi32(buf_out);
+    return _return_short_string(Failure, "not_owner");
 }
 
 ArbResult storeHash(void *storage, uint8_t *input, size_t len) {
@@ -85,12 +88,26 @@ ArbResult storeHash(void *storage, uint8_t *input, size_t len) {
         return _return_short_string(Failure, "Invalid input length");
     }
 
-    bebi32 slot;
+    // Obteniendo el hash desde el input
     bebi32 hash;
-    memcpy(hash, input, 32);
-    property_slot(hash, slot);
+	memcpy(hash, input, 32);
 
-    return _return_short_string(Success, "Hash stored successfully");
+    // La wallet que se guardará en el map;
+    bebi32 owner;
+    msg_sender_padded(owner);
+
+    if(!bebi32_is_zero(owner))
+    {
+        // Obtenemos el index del map donde guardaremos la info
+        bebi32 idx_hash_slot;
+        hash_idx_storage_slot(hash, idx_hash_slot);
+
+        // Guardamos en cache
+        storage_cache_bytes32(idx_hash_slot, owner);
+
+        // Persistimo la información
+        storage_flush_cache(false);
+    }
+
+    return _success_bebi32(hash);
 }
-
-
