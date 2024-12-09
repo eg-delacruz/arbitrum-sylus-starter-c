@@ -28,6 +28,7 @@ export default function AddReg({ account }: Props) {
   const [words, setWords] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const [showFede, setShowFede] = useState(true);
+  const [validationSuccess, setValidationSuccess] = useState(false);
   const [success, setSuccess] = useState(false);
   const { data: dataResponse, writeContract } = useWriteContract();
 
@@ -52,11 +53,11 @@ export default function AddReg({ account }: Props) {
 
       setOpenModal(true);
       setShowFede(true);
-      setSuccess(false);
+      setValidationSuccess(false);
 
       setTimeout(() => {
         setShowFede(false);
-        setSuccess(true);
+        setValidationSuccess(true);
       }, 7000);
       setTimeout(() => {
         setOpenModal(false);
@@ -72,6 +73,7 @@ export default function AddReg({ account }: Props) {
           // }
         });
         console.log({ res });
+        //TODO: If transaction success, show success message in the UI
       }, 10000);
 
       console.log({ dataResponse });
@@ -95,9 +97,16 @@ export default function AddReg({ account }: Props) {
         <AddRegModal
           openModal={openModal}
           showFede={showFede}
-          success={success}
+          success={validationSuccess}
         />
       </div>
+      {success && (
+        <div className="flex justify-center">
+          <p className="bg-green-500 text-white p-2 rounded-md">
+            Registery was succesfully stored in the blockchain
+          </p>
+        </div>
+      )}
     </>
   );
 }
