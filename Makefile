@@ -11,6 +11,8 @@ C_FILES = $(wildcard contracts/*.c) $(wildcard stylus-sdk-c/src/*.c)
 
 OBJECTS = $(patsubst %.c, %.o, $(C_FILES))
 
+
+
 all: $(NAME)
 
 # Paso 1
@@ -27,13 +29,24 @@ $(NAME): etherra_unstripped.wasm
 	wasm-strip -o $@ $<
 
 # Step 4: check the wasm using cargo-stylus
-# cargo stylus check --wasm-file ./etherra.wasm -e https://sepolia-rollup.arbitrum.io/rpc
+check: 
+	cargo stylus check --wasm-file ./etherra.wasm -e https://sepolia-rollup.arbitrum.io/rpc
+
+deploy:
+	cargo stylus deploy --wasm-file ./etherra.wasm -e https://sepolia-rollup.arbitrum.io/rpc --cargo-stylus-version 0.5.3 --private-key $PRIVATE_KEY
 
 # Step 5: deploy the wasm using cargo-stylus
 # cargo stylus deploy --wasm-file ./etherra.wasm -e https://sepolia-rollup.arbitrum.io/rpc --cargo-stylus-version 0.5.3 --private-key 9b73cc1b5ac7be0d5fe5e7b8bcaf379c49365c80220d1cd169e678c53ade54f1
 
+interface.json: interface_compile.json ./contracts/etherra.sol
+	cat $< | solc --standard-json --pretty-json > $@
+
+cargo-generate: interface.json
+	cargo stylus cgen $< interface-gen
+	cp ./interface-gen/etherra/Etherra.h ./contracts/
+
 clean:
-	@rm -rf $(OBJECTS) c_unstripped.wasm $(NAME)
+	@rm -rf $(OBJECTS) etherra_unstripped.wasm $(NAME)
 re: clean all
 
 frontend: all
