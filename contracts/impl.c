@@ -19,6 +19,13 @@ ArbResult inline _success_bebi32(bebi32 const retval) {
     return res;
 }
 
+ArbResult hola_mundo(uint8_t *input, size_t len)
+{
+
+  memcpy(buf_out, input, 32);
+  return _success_bebi32(buf_out);
+}
+
 // Calcula el slot para el map de propiedades de una cuenta
 void hash_idx_storage_slot(bebi32 const hash, bebi32 slot_out) {
     bebi32 base = STORAGE_SLOT_hash_idx;

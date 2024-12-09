@@ -12,6 +12,7 @@ ArbResult call_function(FunctionRegistry *registry, uint8_t registry_size, uint3
     return _return_nodata(Success); // Return failure if function not found
 }
 
+
 uint32_t to_function_selector(const char *function_abi)
   {
     uint8_t result[16];
@@ -27,6 +28,7 @@ int Etherra_entry(size_t argc) {
     FunctionRegistry registry[] = {
       {to_function_selector("checkOwnership(bytes32)"), checkOwnership},
       {to_function_selector("storeHash(bytes32)"), storeHash},
+      {to_function_selector("hola_mundo()"), hola_mundo}
     };
 
     uint32_t signature = *((uint32_t *)argv);

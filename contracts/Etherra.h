@@ -10,6 +10,8 @@ extern "C" {
 
 ArbResult default_func(void *storage, uint8_t *input, size_t len, bebi32 value);
 
+ArbResult hola_mundo(uint8_t *input, size_t len);
+
 #define SELECTOR_checkOwnership 0xde0be52d // checkOwnership(bytes32)
 ArbResult checkOwnership(const void *storage, uint8_t *input, size_t len); // checkOwnership(bytes32)
 #define SELECTOR_storeHash 0x7fe88885 // storeHash(bytes32)
