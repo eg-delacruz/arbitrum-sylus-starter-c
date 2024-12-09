@@ -17,11 +17,15 @@
 
 #include <stddef.h>
 #include <stdint.h>
+#include <stdbool.h>
 
 #include "../stylus-sdk-c/include/hostio.h"
 #include "../stylus-sdk-c/include/stylus_types.h"
 #include "../stylus-sdk-c/include/stylus_utils.h"
+#include "../stylus-sdk-c/include/stylus_debug.h"
 #include "../stylus-sdk-c/include/string.h"
+#include "../stylus-sdk-c/include/bebi.h"
+#include "../stylus-sdk-c/include/storage.h"
 
 #ifdef __cplusplus
 extern "C"

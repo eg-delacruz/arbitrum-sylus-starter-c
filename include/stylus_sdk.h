@@ -32,23 +32,9 @@ extern "C"
     ArbResult (*function)(uint8_t *input, size_t len);
   } FunctionRegistry;
 
-  // Iterate through the registry to find the function with the matching signature
-  ArbResult call_function(FunctionRegistry *registry, uint8_t registry_size, uint32_t signature, uint8_t *input, size_t len)
-  {
-    for (uint8_t i = 0; i < registry_size; i++) // Loop until the sentinel is found
-    {
-      if (registry[i].signature == signature)
-        return registry[i].function(input, len); // Call the function if signature matches
-    }
-    return _return_nodata(Success); // Return failure if function not found
-  }
+  ArbResult call_function(FunctionRegistry *registry, uint8_t registry_size, uint32_t signature, uint8_t *input, size_t len);
 
-  uint32_t to_function_selector(const char *function_abi)
-  {
-    uint8_t result[16];
-    native_keccak256((uint8_t *)function_abi, strlen(function_abi), result);
-    return *((uint32_t *)result);
-  }
+  uint32_t to_function_selector(const char *function_abi);
 
 #ifdef __cplusplus
 }
