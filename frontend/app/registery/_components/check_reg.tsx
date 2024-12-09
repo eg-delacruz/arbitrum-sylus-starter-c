@@ -9,7 +9,7 @@ import Form from "./form";
 import LoadingModal from "./loading_modal";
 import ShowOwnership from "./show_ownership";
 
-import { parseAbi, keccak256, stringToBytes } from "viem";
+import { keccak256, stringToBytes } from "viem";
 
 import { useReadContract } from "wagmi";
 
@@ -27,10 +27,18 @@ export default function CheckReg({ account }: Props) {
   const [failure, setFailure] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  const result = useReadContract({
+  const data = `${dni}-${words}-${account.address}`;
+
+  const hash = keccak256(stringToBytes(data));
+
+  const { data: result, refetch } = useReadContract({
     abi: ABI,
-    functionName: "get_value",
+    functionName: "checkOwnership",
     address: CONTRACT_ADDRESS,
+    args: [hash],
+    query: {
+      enabled: false
+    }
   });
 
   const check_registery = async () => {
@@ -51,17 +59,15 @@ export default function CheckReg({ account }: Props) {
       return;
     }
 
-    const data = `${dni}-${words}-${account.address}`;
-
-    const hash = keccak256(stringToBytes(data));
+    refetch();
 
     //const comparison_result = result.data === hash;
     //TODO: erase this
-    const comparison_result = true;
+    //const comparison_result = true;
 
     setTimeout(async () => {
       setLoading(false);
-      if (comparison_result) {
+      if (result) {
         setSuccess(true);
       } else {
         setFailure(true);
