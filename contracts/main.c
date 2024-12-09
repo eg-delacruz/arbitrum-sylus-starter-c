@@ -26,8 +26,8 @@ int Etherra_entry(size_t argc) {
     read_args(argv);
 
     FunctionRegistry registry[] = {
-      {to_function_selector("checkOwnership(bytes32)"), checkOwnership},
-      {to_function_selector("storeHash(bytes32)"), storeHash},
+      {to_function_selector("checkOwnership(uint256)"), checkOwnership},
+      {to_function_selector("storeHash(uint256)"), storeHash},
       {to_function_selector("hola_mundo()"), hola_mundo}
     };
 
