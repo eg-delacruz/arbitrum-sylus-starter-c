@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { ABI, CONTRACT_ADDRESS } from "../../../lib/contract";
+import { ABI, CONTRACT_ADDRESS } from "@/lib/contract";
 
 //Components
 import Form from "./form";
@@ -60,10 +60,6 @@ export default function CheckReg({ account }: Props) {
     }
 
     refetch();
-
-    //const comparison_result = result.data === hash;
-    //TODO: erase this
-    //const comparison_result = true;
 
     setTimeout(async () => {
       setLoading(false);

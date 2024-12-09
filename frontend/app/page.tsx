@@ -1,15 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
-import { createPublicClient, createWalletClient, http, parseAbi } from "viem";
-import { Tabs, TabsList, TabsContent, TabsTrigger } from "@/components/ui/tabs";
 import { useRkAccountModal } from "@/lib/rainbowkit";
-import { useAccount, useReadContract } from "wagmi";
+import { useAccount } from "wagmi";
 import Image from "next/image";
 
-import logo from "../assets/logo.png";
-import grama from "../assets/grama.svg";
+import logo from "@/assets/logo.png";
+import grama from "@/assets/grama.svg";
 
 //Components
 import { buttonVariants } from "@/components/ui/button";
@@ -19,7 +16,7 @@ export default function Container() {
   const account = useAccount();
 
   const connect = () => {
-    openAccountModal();
+    openAccountModal?.();
   };
 
   return (
@@ -38,7 +35,7 @@ export default function Container() {
                 href={"/registery"}
                 className={buttonVariants({
                   variant: "default",
-                  size: "default",
+                  size: "default"
                 })}
               >
                 Start
@@ -46,7 +43,7 @@ export default function Container() {
               <button
                 className={buttonVariants({
                   variant: "secondary",
-                  size: "default",
+                  size: "default"
                 })}
                 onClick={connect}
               >
@@ -58,7 +55,7 @@ export default function Container() {
               onClick={connect}
               className={buttonVariants({
                 variant: "default",
-                size: "default",
+                size: "default"
               })}
             >
               Connect

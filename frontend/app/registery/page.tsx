@@ -5,7 +5,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 
 //Assets
-import logo from "../../assets/logo.png";
+import logo from "@/assets/logo.png";
 
 //Components
 import { Tabs, TabsList, TabsContent, TabsTrigger } from "@/components/ui/tabs";

@@ -2,15 +2,10 @@
 
 import Image from "next/image";
 
-import {
-  Dialog,
-  DialogBackdrop,
-  DialogPanel,
-  DialogTitle,
-} from "@headlessui/react";
+import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 
 //Assets
-import isotipo from "../../../assets/isotipo.svg";
+import isotipo from "@/assets/isotipo.svg";
 
 type Props = {
   openModal: boolean;
