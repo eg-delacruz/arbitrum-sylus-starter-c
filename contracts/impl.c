@@ -83,7 +83,10 @@ ArbResult checkOwnership(const void *storage, uint8_t *input, size_t len) { // b
         hash_idx_storage_slot(hash, idx_hash_slot);
 
         storage_load_bytes32(idx_hash_slot, buf_out);
-        return _success_bebi32(buf_out);
+        if (bebi32_cmp(buf_out, owner) != 0)
+            return _return_short_string(Success, "not_owner");
+        else
+            return _return_short_string(Success, "owner");
     }
 
     return _return_short_string(Failure, "not_owner");
