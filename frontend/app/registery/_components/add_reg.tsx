@@ -1,23 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-import {
-  createPublicClient,
-  createWalletClient,
-  http,
-  parseAbi,
-  keccak256,
-  stringToBytes,
-  parseEther,
-} from "viem";
+import { keccak256, stringToBytes } from "viem";
 
-import { ABI, CONTRACT_ADDRESS } from "../../../lib/contract";
+import { ABI, CONTRACT_ADDRESS } from "@/lib/contract";
 //Components
 import Form from "./form";
 import AddRegModal from "./add_reg_modal";
 
-import { UseAccountReturnType, useReadContract, useWriteContract } from "wagmi";
+import { UseAccountReturnType, useWriteContract } from "wagmi";
 
 type Props = {
   account: UseAccountReturnType;
@@ -29,8 +21,12 @@ export default function AddReg({ account }: Props) {
   const [openModal, setOpenModal] = useState(false);
   const [showFede, setShowFede] = useState(true);
   const [validationSuccess, setValidationSuccess] = useState(false);
-  const [success, setSuccess] = useState(false);
   const { data: dataResponse, writeContract } = useWriteContract();
+
+  useEffect(() => {
+    setDni("");
+    setWords("");
+  }, [dataResponse]);
 
   const add_registery = async () => {
     if (dni === "" || words === "") {
@@ -63,20 +59,13 @@ export default function AddReg({ account }: Props) {
         setOpenModal(false);
         //Write in blockchain´
         console.log("Writing in blockchain");
-        const res = writeContract({
+        writeContract({
           abi: ABI,
           functionName: "storeHash",
           address: CONTRACT_ADDRESS,
-          args: [hash],
-          // overrides: {
-          //   value: parseEther("0")
-          // }
+          args: [hash]
         });
-        console.log({ res });
-        //TODO: If transaction success, show success message in the UI
       }, 10000);
-
-      console.log({ dataResponse });
     } catch (e) {
       console.log(e);
     }
@@ -100,7 +89,7 @@ export default function AddReg({ account }: Props) {
           success={validationSuccess}
         />
       </div>
-      {success && (
+      {dataResponse && (
         <div className="flex justify-center">
           <p className="bg-green-500 text-white p-2 rounded-md">
             Registery was succesfully stored in the blockchain
