@@ -1,0 +1,15 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "etherra": {
+      "urls": ["./contracts/etherra.sol"]
+    }
+  },
+  "settings": {
+    "outputSelection": {
+      "*": {
+        "*": ["abi", "storageLayout"]
+      }
+    }
+  }
+}
