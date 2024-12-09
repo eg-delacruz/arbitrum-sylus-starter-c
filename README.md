@@ -22,19 +22,18 @@ Modernizar el registro de terrenos con una plataforma descentralizada que brinde
 - **Registro de Propiedad:** Registro de terrenos asociado a un hash único generado a partir del DNI y de la ubicación en [3 palabras del terreno](https://what3words.com).
 - **Verificación de la propiedad:** Verificación de la propiedad de un terreno en base al DNI.
 
-### 🌍 **Casos de Uso Potenciales**
+## ¿Qué es what3words?
 
-1. Registro seguro y transparente de terrenos en áreas rurales y urbanas.
-2. Eliminación de intermediarios en el mercado inmobiliario, reduciendo costos y tiempo.
+Para crear este proyecto, hemos utilizado la plataforma de what3words, que han dividio el mundo en cuadrados de 3 x 3 m y han asignado a cada uno de ellos una combinación única de tres palabras. De esta manera simplificamos la definición de un terreno.
 
 ## 🏗 **Arquitectura del Proyecto**
 
 - Frontend: **Next.js**, **React**, **Tailwind CSS** **TypeScript**
-- Backend: **Stylus-Arbitrum**, **C para la creación de smart contract**
+- Backend: **Stylus-Arbitrum**, **C para la creación del smart contract**
 
-## ¿Qué es what3words?
+## Funcionamiento técnico
 
-Para crear este proyecto, hemos utilizado la plataforma de what3words, que han dividio el mundo en cuadrados de 3 x 3 m y han asignado a cada uno de ellos una combinación única de tres palabras. De esta manera simplificamos la definición de un terreno.
+En nuestro smart contract se almacena un hash único generado a partir del DNI, de las 3 palabras, y de la wallet del usuario. Una vez que el "agente verificador" certifica que un terreno pertenece efectivamente al dueño del DNI, este hash se almacena en el contrato inteligente. Para verificar si una persona es dueña o no de un terreno, se debe ingresar el DNI y las 3 palabras del terreno en la interfaz de la aplicación. Si el hash generado a partir de estos datos coincide con el hash almacenado en el contrato, se mostrará un mensaje que indica la veracidad o falsedad de la propiedad.
 
 ## Requisitos
 
