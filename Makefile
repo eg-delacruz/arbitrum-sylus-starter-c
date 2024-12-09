@@ -36,7 +36,7 @@ deploy:
 	cargo stylus deploy --wasm-file ./etherra.wasm -e https://sepolia-rollup.arbitrum.io/rpc --cargo-stylus-version 0.5.3 --private-key $PRIVATE_KEY
 
 # Step 5: deploy the wasm using cargo-stylus
-# cargo stylus deploy --wasm-file ./etherra.wasm -e https://sepolia-rollup.arbitrum.io/rpc --cargo-stylus-version 0.5.3 --private-key 9b73cc1b5ac7be0d5fe5e7b8bcaf379c49365c80220d1cd169e678c53ade54f1
+# cargo stylus deploy --wasm-file ./etherra.wasm -e https://sepolia-rollup.arbitrum.io/rpc --cargo-stylus-version 0.5.3 --private-key $PRIVATE_KEY
 
 interface.json: interface_compile.json ./contracts/etherra.sol
 	cat $< | solc --standard-json --pretty-json > $@
