@@ -21,7 +21,7 @@ $(OBJECTS): %.o: %.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 # Paso 2: Enlazar
-etherra_unstripped.wasm: $(OBJECTS) # TODO: Obtener los objetos correctos
+etherra_unstripped.wasm: $(OBJECTS)
 	$(LD) $(LDFLAGS) $(OBJECTS) -o $@
 
 
