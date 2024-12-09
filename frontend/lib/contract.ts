@@ -2,12 +2,12 @@ import { parseAbi } from "viem";
 //import { arbitrumSepolia } from "viem/chains";
 import "dotenv/config";
 
-export const CONTRACT_ADDRESS = "0x20682fb0d6673d73a1d24f70216d2468d5af9b93";
+export const CONTRACT_ADDRESS = "0x707234efcf1eaa130e5b295af013d9db5ca1b95a";
 
 export const ABI = parseAbi([
-  "function get_value() public view returns (uint256)",
-  "function checkOwnership(bytes32 hash) public view returns (bool)",
-  "function storeHash(bytes32) external returns (bytes32)"
+  "function hola_mundo(uint256) external view returns (string)",
+  "function checkOwnership(bytes32) public view returns (string)",
+  "function storeHash(bytes32) external returns (string)"
 ]);
 
 /**
