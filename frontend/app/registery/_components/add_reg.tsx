@@ -9,8 +9,10 @@ import {
   parseAbi,
   keccak256,
   stringToBytes,
+  parseEther
 } from "viem";
 
+import { ABI, CONTRACT_ADDRESS } from "../../../lib/contract";
 //Components
 import Form from "./form";
 import AddRegModal from "./add_reg_modal";
@@ -21,20 +23,13 @@ type Props = {
   account: UseAccountReturnType;
 };
 
-const ABI = parseAbi([
-  "function hola_mundo() public view returns (string)",
-  "function set_value(bytes32) public",
-  "function get_value() public view returns (uint256)",
-  "function storeHash(bytes32) external returns (bytes32)",
-]);
-
 export default function AddReg({ account }: Props) {
   const [dni, setDni] = useState("");
   const [words, setWords] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const [showFede, setShowFede] = useState(true);
   const [success, setSuccess] = useState(false);
-  const { data, writeContract } = useWriteContract();
+  const { data: dataResponse, writeContract } = useWriteContract();
 
   const add_registery = async () => {
     if (dni === "" || words === "") {
@@ -72,10 +67,13 @@ export default function AddReg({ account }: Props) {
       const res = writeContract({
         abi: ABI,
         functionName: "storeHash",
-        address: "0xf60be222d397f0be3b11dafc1175f070ddf3eb30",
+        address: CONTRACT_ADDRESS,
         args: [hash],
+        overrides: {
+          value: parseEther("0")
+        }
       });
-      console.log({ data });
+      console.log({ dataResponse });
       console.log({ res });
     } catch (e) {
       console.log(e);
