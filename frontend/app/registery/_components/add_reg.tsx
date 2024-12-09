@@ -9,7 +9,7 @@ import {
   parseAbi,
   keccak256,
   stringToBytes,
-  parseEther
+  parseEther,
 } from "viem";
 
 import { ABI, CONTRACT_ADDRESS } from "../../../lib/contract";
@@ -60,21 +60,21 @@ export default function AddReg({ account }: Props) {
       }, 7000);
       setTimeout(() => {
         setOpenModal(false);
+        //Write in blockchain´
+        console.log("Writing in blockchain");
+        const res = writeContract({
+          abi: ABI,
+          functionName: "storeHash",
+          address: CONTRACT_ADDRESS,
+          args: [hash],
+          // overrides: {
+          //   value: parseEther("0")
+          // }
+        });
+        console.log({ res });
       }, 10000);
 
-      //Write in blockchain´
-      console.log("Writing in blockchain");
-      const res = writeContract({
-        abi: ABI,
-        functionName: "storeHash",
-        address: CONTRACT_ADDRESS,
-        args: [hash],
-        overrides: {
-          value: parseEther("0")
-        }
-      });
       console.log({ dataResponse });
-      console.log({ res });
     } catch (e) {
       console.log(e);
     }
