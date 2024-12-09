@@ -21,7 +21,6 @@ ArbResult inline _success_bebi32(bebi32 const retval) {
 
 ArbResult hola_mundo(uint8_t *input, size_t len)
 {
-
   memcpy(buf_out, input, 32);
   return _success_bebi32(buf_out);
 }
@@ -71,16 +70,16 @@ ArbResult checkOwnership(const void *storage, uint8_t *input, size_t len) { // b
         return _return_nodata(Failure);
     }
 
-    bebi32 hash;
+    uint8_t hash[32];
 	memcpy(hash, input, 32);
 
 
-    bebi32 owner;
+    uint8_t owner[32];
     msg_sender_padded(owner);
 
     if(!bebi32_is_zero(owner))
     {
-        bebi32 idx_hash_slot;
+        uint8_t idx_hash_slot[32];
         hash_idx_storage_slot(hash, idx_hash_slot);
 
         storage_load_bytes32(idx_hash_slot, buf_out);
@@ -96,17 +95,17 @@ ArbResult storeHash(void *storage, uint8_t *input, size_t len) {
     }
 
     // Obteniendo el hash desde el input
-    bebi32 hash;
+    uint8_t hash[32];
 	memcpy(hash, input, 32);
 
     // La wallet que se guardará en el map;
-    bebi32 owner;
+    uint8_t owner[32];
     msg_sender_padded(owner);
 
     if(!bebi32_is_zero(owner))
     {
         // Obtenemos el index del map donde guardaremos la info
-        bebi32 idx_hash_slot;
+        uint8_t idx_hash_slot[32];
         hash_idx_storage_slot(hash, idx_hash_slot);
 
         // Guardamos en cache
@@ -116,5 +115,5 @@ ArbResult storeHash(void *storage, uint8_t *input, size_t len) {
         storage_flush_cache(false);
     }
 
-    return _success_bebi32(hash);
+    return _return_short_string(Success, "Guardado");
 }
