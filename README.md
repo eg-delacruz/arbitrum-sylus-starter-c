@@ -1,17 +1,44 @@
-# Arbitrum Stylus Starter Template for C
+# \***\*🌐Hackaton Crypto 42\*\***!
 
-## Register and Storage Slots
+![enter image description here](https://i.imgur.com/SBdzVMx.png)
 
-Storage slots are pretty similar to registers in 32bit architectures.
-Since both have:
+## **🚀**Informe de proyecto: Etherra
 
-1. Fixed Size: Storage slots in Ethereum can hold exactly 32 bytes. Similar to how registers have a fixed size in assembly (e.g., 32-bit, 64-bit).
+\*📝 **Resumen del proyecto\***
 
-2. Direct Addressing: Just as you access a specific register by its identifier (eax, r1), you access storage slots using their indexes: 0x01, 0x02.
+**Etherra** es una App diseñada para transformar la gestión de terrenos mediante el uso de blockchain. Utilizando tecnologías como **Arbitrum** y su software **Stylus**, que permite escribir contratos inteligentes compatibles con EVM en Rust y cualquier otro lenguaje que se compile en Wasm, por ejemplo **C**. La plataforma ofrece una solución descentralizada, transparente y segura para el registro de terrenos. A través de una interfaz intuitiva, los usuarios pueden conectar sus wallets, interactuar con contratos inteligentes y gestionar su información de propiedad de manera inmutable.
 
-3. Explicit Management: Like assembly programming, developers must explicitly manage how storage slots are allocated and used. Miss assignment of memory/slots can cause data corruption.
+## 🔍 **Introducción**
+
+Los sistemas tradicionales de gestión de terrenos son ineficientes, costosos y propensos al fraude. **Etherra** utiliza blockchain para superar estas limitaciones, ofreciendo una solución digital que prioriza la transparencia, la escalabilidad y la accesibilidad global.
+
+## 🛠 **Descripción del Proyecto**
+
+\*🎯 **Objetivo Principal\***
+Modernizar el registro de terrenos con una plataforma descentralizada que brinde seguridad, trazabilidad y accesibilidad.
+
+### ✨ **Funcionalidades Clave**
+
+- **Registro de Propiedad:** Registro de terrenos asociado a un hash único generado a partir del DNI y de la ubicación en [3 palabras del terreno](https://what3words.com).
+- **Verificación de la propiedad:** Verificación de la propiedad de un terreno en base al DNI.
+
+### 🌍 **Casos de Uso Potenciales**
+
+1. Registro seguro y transparente de terrenos en áreas rurales y urbanas.
+2. Eliminación de intermediarios en el mercado inmobiliario, reduciendo costos y tiempo.
+
+## 🏗 **Arquitectura del Proyecto**
+
+- Frontend: **Next.js**, **React**, **Tailwind CSS** **TypeScript**
+- Backend: **Stylus-Arbitrum**, **C para la creación de smart contract**
+
+## ¿Qué es what3words?
+
+Para crear este proyecto, hemos utilizado la plataforma de what3words, que han dividio el mundo en cuadrados de 3 x 3 m y han asignado a cada uno de ellos una combinación única de tres palabras. De esta manera simplificamos la definición de un terreno.
 
 ## Requisitos
+
+- En directorio /frontend hacer npm install
 
 - Brew (Mac) / Chocolatey (Windows)
 - Docker (Docker Desktop)
@@ -33,3 +60,11 @@ Si no, podemos instalarlo con `brew install wabt`
 
 - `make` para generar el archivo contract.wasm
 - `cargo stylus check --wasm-file ./contract.wasm -e https://sepolia-rollup.arbitrum.io/rpc` (si tenemos output en verde estamos listos 🚀🚀)
+
+## Uso
+
+Clonar repositorio e instalar los requerimientos correspondientes.
+
+En terminal, dentro de la carpeta /frontend, correr el comando npm run dev y acceder a https://localhost:3000 desde el navegador.
+
+Para una guía completa del uso de la plataforma, ver [este vídeo de presentación](https://drive.google.com/file/d/1yDz_Nr2yO_CSc-XQEv7vzj8kZyl5XolA/view)
