@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 
+import { ABI, CONTRACT_ADDRESS } from "../../../lib/contract";
+
 //Components
 import Form from "./form";
 import LoadingModal from "./loading_modal";
@@ -18,12 +20,6 @@ type Props = {
   account: UseAccountReturnType;
 };
 
-const ABI = parseAbi([
-  "function hola_mundo() public view returns (string)",
-  "function set_value(bytes32) public",
-  "function get_value() public view returns (bytes32)",
-]);
-
 export default function CheckReg({ account }: Props) {
   const [dni, setDni] = useState("");
   const [words, setWords] = useState("");
@@ -34,7 +30,7 @@ export default function CheckReg({ account }: Props) {
   const result = useReadContract({
     abi: ABI,
     functionName: "get_value",
-    address: "0xca63784ee340ff0dbce78ac965f609fc7d30f291",
+    address: CONTRACT_ADDRESS,
   });
 
   const check_registery = async () => {
